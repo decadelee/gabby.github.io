@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Calculator</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+  <body>
+
+    <div class="container" style="max-width:600px;margin:60px auto;">
+	     <form role="form">
+	        <div class="form-group">
+	           <label for="name">本次订单金额</label>
+             <div class="input-group">
+	              <input type="name" class="form-control" id="currentBilling" placeholder="请输入">
+                <span class="input-group-addon">美元</span>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="name">阿里巴巴国际站星级</label>
+              <select class="form-control" id="starLevel">
+                <option value="5">五星</option>
+                <option value="4">四星</option>
+                <option value="3">三星</option>
+                <option value="2">二星</option>
+                <option value="1">一星</option>
+              </select>
+          </div>
+	        <div class="form-group">
+            <label for="name">上季度一达通出口结汇金额</label>
+            <div class="input-group">
+              <input type="name" class="form-control" id="lastQuarterBilling" placeholder="请输入">
+              <span class="input-group-addon">美元</span>
+            </div>
+          </div>
+      </form>
+      <div class="col-md-4 text-center">
+          <button id="calculateButton" name="calculateButton" class="btn btn-primary" type="button">计算</button>
+          <button id="resetButton" name="resetButton" class="btn btn-default" type="button" style="margin-left: 10%;">重置</button>
+      </div>
+
+      <div class="col-md-4 text-center">
+        <label for="colFormLabelSm" class="col-form-label text-center"></label>
+      </div>
+      <div class="col-md-4 text-center">
+        <!-- <label for="colFormLabelSm" class="col-form-label text-center">权益</label> -->
+      </div>
+
+      <form role="form">
+        <div class="form-group">
+          <label for="colFormLabelSm">退回垫资税</label>
+          <!-- <div class="col-xs-8 form-inline"> -->
+            <div class="input-group">
+              <input type="text" class="form-control" id="returnBilling" disabled>
+              <span class="input-group-addon">人民币</span>
+            </div>
+          <!-- </div> -->
+        </div>
+        <!-- <div class="form-group row"> -->
+        <div class="form-group">
+          <label for="colFormLabel">结汇返利</label>
+          <!-- <label for="colFormLabel" class="col-xs-4">结汇返利</label> -->
+          <!-- <div class="col-xs-8 form-inline"> -->
+            <div class="input-group">
+              <input type="name" class="form-control" id="returnProfit" disabled>
+              <span class="input-group-addon">人民币</span>
+            </div>
+          <!-- </div> -->
+        </div>
+        <div class="form-group row">
+          <!-- <label for="colFormLabelLg">总计</label> -->
+          <label for="colFormLabelLg" class="col-xs-4 text-right">总计</label>
+          <div class="col-xs-8 form-inline">
+            <div class="input-group">
+              <input type="name" class="form-control" id="total" disabled>
+              <span class="input-group-addon">人民币</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+           <label for="name">额外权益</label>
+           <input type="text" class="form-control" id="extraProfit" disabled>
+        </div>
+
+      </form>
+
+      <form role="form">
+        <div class="form-group">
+           <label for="name">TAO3N服务费</label>
+           <div class="input-group">
+             <input type="text" class="form-control" id="serviceBilling" disabled>
+             <span class="input-group-addon">人民币</span>
+           </div>
+        </div>
+        <div class="form-group">
+           <label for="name">比市场平均收费便宜</label>
+           <div class="input-group">
+            <input type="text" class="form-control" id="lessThanAvg" disabled>
+            <span class="input-group-addon">人民币</span>
+          </div>
+        </div>
+      </form>
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+
+    </div>
+  </body>
+</html>
+
+<script>
+  $(function () {
+    var nua = navigator.userAgent
+    var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1)
+    if (isAndroid) {
+      $('select.form-control').removeClass('form-control').css('width', '100%')
+    }
+  });
+
+  $("#calculateButton").click(function () {
+      var exchangeRate = 7;
+      var startLevel = $("#starLevel").val();
+      var currentBilling = $("#currentBilling").val();
+      var lastQuarterBilling = $("#lastQuarterBilling").val();
+
+      var total = 0;
+      var returnProfit = 0;
+      var returnBilling = currentBilling * exchangeRate * 0.13;
+      if (lastQuarterBilling < 600000) {
+          returnProfit = 0;
+      } else if (lastQuarterBilling >= 600000 && lastQuarterBilling < 5000000) {
+          returnProfit = currentBilling * 0.005;
+      } else {
+          returnProfit = currentBilling * 0.008;
+      }
+      total = returnProfit + returnBilling;
+      $("#returnBilling").val(returnBilling.toFixed(2));
+      $("#returnProfit").val(returnProfit.toFixed(2));
+      $("#total").val(total.toFixed(2));
+      if (startLevel >= 3) {
+          $("#extraProfit").val("五折优惠+优客极速退");
+      } else {
+          $("#extraProfit").val("五折优惠");
+      }
+      var serviceBilling = 0;
+      var lessThanAvg = 0;
+      if (currentBilling < 13334) {
+          serviceBilling = 200 * 1.06 * 0.5 + returnBilling * 0.035 * 1.06;
+      } else if (currentBilling >= 13334 && currentBilling < 40000) {
+          serviceBilling = currentBilling * 1.06 * 0.5 + returnBilling * 0.035 * 1.06;
+      } else {
+          serviceBilling = 600 * 1.06 * 0.5 + returnBilling * 0.035 * 1.06;
+      }
+      lessThanAvg = currentBilling * 0.06 * 1.06 - serviceBilling;
+      $("#serviceBilling").val(serviceBilling.toFixed(2));
+      $("#lessThanAvg").val(lessThanAvg.toFixed(2));
+  });
+
+  $("#resetButton").click(function () {
+    $("#currentBilling").val("");
+    $("#lastQuarterBilling").val("");
+    $("#returnBilling").val("");
+    $("#returnProfit").val("");
+    $("#total").val("");
+    $("#extraProfit").val("");
+    $("#serviceBilling").val("");
+    $("#lessThanAvg").val("");
+  });
+
+</script>
