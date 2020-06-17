@@ -17,41 +17,45 @@
       <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <![endif]-->
   <body>
+    <img src="img1.png" class="img-responsive center-block" style="max-width:600px;width:100%;">
 
-    <div class="container" style="max-width:600px;margin:60px auto;">
-	     <form role="form">
-	        <div class="form-group">
-	           <label for="name">本次订单金额</label>
-             <div class="input-group">
-	              <input type="name" class="form-control" id="currentBilling" placeholder="请输入">
+    <div class="container" style="max-width:600px;margin:30px auto 60px auto;">
+
+      <div>
+  	    <form role="form">
+  	        <div class="form-group">
+  	           <label for="name">本次订单金额</label>
+               <div class="input-group">
+  	              <input type="name" class="form-control" id="currentBilling" placeholder="请输入">
+                  <span class="input-group-addon">美元</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name">阿里巴巴国际站星级</label>
+                <select class="form-control" id="starLevel">
+                  <option value="5">五星</option>
+                  <option value="4">四星</option>
+                  <option value="3">三星</option>
+                  <option value="2">二星</option>
+                  <option value="1">一星</option>
+                </select>
+            </div>
+  	        <div class="form-group">
+              <label for="name">上季度一达通出口结汇金额</label>
+              <div class="input-group">
+                <input type="name" class="form-control" id="lastQuarterBilling" placeholder="请输入">
                 <span class="input-group-addon">美元</span>
               </div>
-          </div>
-          <div class="form-group">
-              <label for="name">阿里巴巴国际站星级</label>
-              <select class="form-control" id="starLevel">
-                <option value="5">五星</option>
-                <option value="4">四星</option>
-                <option value="3">三星</option>
-                <option value="2">二星</option>
-                <option value="1">一星</option>
-              </select>
-          </div>
-	        <div class="form-group">
-            <label for="name">上季度一达通出口结汇金额</label>
-            <div class="input-group">
-              <input type="name" class="form-control" id="lastQuarterBilling" placeholder="请输入">
-              <span class="input-group-addon">美元</span>
+            </div>
+
+            <div class='form-group'>
+            <div class="text-center">
+                <button id="calculateButton" name="calculateButton" class="btn btn-primary" type="button">计算</button>
+                <button id="resetButton" name="resetButton" class="btn btn-default" type="button" style="margin-left: 10%;">重置</button>
             </div>
           </div>
-
-          <div class='form-group'>
-          <div class="text-center">
-              <button id="calculateButton" name="calculateButton" class="btn btn-primary" type="button">计算</button>
-              <button id="resetButton" name="resetButton" class="btn btn-default" type="button" style="margin-left: 10%;">重置</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
 
 
       <div class="text-center">
@@ -85,7 +89,7 @@
         <div class="form-group row">
           <!-- <label for="colFormLabelLg">总计</label> -->
           <label for="colFormLabelLg" class="col-xs-4 text-right">总计</label>
-          <div class="col-xs-8 form-inline">
+          <div class="col-xs-8 col-md-6 form-inline">
             <div class="input-group">
               <input type="name" class="form-control" id="total" disabled>
               <span class="input-group-addon">人民币</span>
