@@ -68,7 +68,7 @@
 
       <form role="form">
         <div class="form-group">
-          <label for="colFormLabelSm">退回垫资税</label>
+          <label for="colFormLabelSm">退税垫资款</label>
           <!-- <div class="col-xs-8 form-inline"> -->
             <div class="input-group">
               <input type="text" class="form-control" id="returnBilling" disabled>
@@ -89,7 +89,7 @@
         </div>
         <div class="form-group row">
           <!-- <label for="colFormLabelLg">总计</label> -->
-          <label for="colFormLabelLg" class="col-xs-4 text-right">总计</label>
+          <label for="colFormLabelLg" class="col-xs-4 text-right">共计</label>
           <div class="col-xs-8 col-md-6 form-inline">
             <div class="input-group">
               <input type="name" class="form-control" id="total" disabled>
@@ -161,19 +161,21 @@
       $("#returnProfit").val(returnProfit.toFixed(2));
       $("#total").val(total.toFixed(2));
       if (startLevel >= 3) {
-          $("#extraProfit").val("五折优惠+优客极速退");
+          $("#extraProfit").val("基础服务费5折优惠+优客极速退");
       } else {
-          $("#extraProfit").val("五折优惠");
+          $("#extraProfit").val("基础服务费5折优惠");
       }
       var serviceBilling = 0;
       var lessThanAvg = 0;
+
       if (currentBilling < 13334) {
-          serviceBilling = 200 * 1.06 * 0.5 + returnBilling * 0.035 * 1.06;
+          serviceBilling = 200 * 1.06 * 0.5 + returnBilling * 0.025 * 1.06;
       } else if (currentBilling >= 13334 && currentBilling < 40000) {
-          serviceBilling = currentBilling * 1.06 * 0.5 + returnBilling * 0.035 * 1.06;
+          serviceBilling = currentBilling * 0.015 * 1.06 * 0.5 + returnBilling * 0.025 * 1.06;
       } else {
-          serviceBilling = 600 * 1.06 * 0.5 + returnBilling * 0.035 * 1.06;
+          serviceBilling = 600 * 1.06 * 0.5 + returnBilling * 0.025 * 1.06;
       }
+
       lessThanAvg = currentBilling * 0.06 * 1.06 - serviceBilling;
       $("#serviceBilling").val(serviceBilling.toFixed(2));
       $("#lessThanAvg").val(lessThanAvg.toFixed(2));
