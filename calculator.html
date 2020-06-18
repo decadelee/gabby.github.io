@@ -67,95 +67,50 @@
       </div>
 
 
-      <table class="table table-striped">
-        <!-- <caption></caption> -->
-        <thead>
-          <tr>
-            <th>权益</th>
-          </tr>
-        </thead>
+      <table class="table table-bordered" id="rightTable">
+        <caption>权益</caption>
         <tbody>
           <tr class="info">
             <td>通关和收汇服务</td>
-            <td></td>
-            <td></td>
+            <td id="serviceRight" colspan="2"></td>
           </tr>
           <tr class="info">
             <td>退税垫资款</td>
-            <!-- <td><input type="text" class="form-control" id="returnBilling" disabled></td> -->
-            <td><input type="text" class="form-control" id="returnBilling" style="background-color: inherit;border-top-width: 0px;" disabled></td>
+            <td id="returnBilling"></td>
             <td>人民币</td>
           </tr>
           <tr class="info">
             <td>结汇返利</td>
-            <td><input type="name" class="form-control" id="returnProfit" style="background-color: inherit;border-top-width: 0px;" disabled></td>
+            <td id="returnProfit"></td>
             <td>人民币</td>
+          </tr>
+          <tr class="info">
+            <td style="text-align: right; color:#e2861a;">共计</td>
+            <td id="total"></td>
+            <td>人民币</td>
+          </tr>
+          <tr class="info">
+            <td>额外权益</td>
+            <td id="extraProfit" colspan="2"></td>
           </tr>
         </tbody>
       </table>
 
-      <form role="form">
-        <!-- <div class="form-group row">
-          <label for="colFormLabelSm" class="col-xs-6">通关和收汇服务</label>
-          <div class="col-xs-6 form-inline">
-            <div class="input-group">
-            </div>
-          </div>
-        </div> -->
-
-        <!-- <div class="form-group">
-          <label for="colFormLabelSm">退税垫资款</label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="returnBilling" disabled>
-              <span class="input-group-addon">人民币</span>
-            </div>
-        </div> -->
-
-        <!-- <div class="form-group">
-          <label for="colFormLabel">结汇返利</label>
-            <div class="input-group">
-              <input type="name" class="form-control" id="returnProfit" disabled>
-              <span class="input-group-addon">人民币</span>
-            </div>
-        </div> -->
-
-        <div class="form-group row">
-          <!-- <label for="colFormLabelLg" class="col-xs-4 text-right">共计</label> -->
-          <label for="colFormLabelLg" class="col-xs-2 text-right"></label>
-          <div class="col-xs-10 col-md-8 form-inline">
-            <div class="input-group">
-              <span class="input-group-addon" style="background-color: white; border: 0px;">共计:</span>
-              <input type="name" class="form-control" style=" border: 0px;" id="total" disabled>
-              <span class="input-group-addon" style="background-color: white; border: 0px;">人民币</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-           <label for="name">额外权益</label>
-           <input type="text" class="form-control" style="border: 0px; border-radius: 0;" id="extraProfit" disabled>
-        </div>
-
-      </form>
-
-      <form role="form">
-        <div class="form-group">
-           <!-- <label for="name">TAO3N服务费</label> -->
-           <div class="input-group">
-             <span class="input-group-addon" style="background-color: white; border: 0px;">TAO3N服务费:</span>
-             <input type="text" class="form-control" style=" border: 0px;" id="serviceBilling" disabled>
-             <span class="input-group-addon" style="background-color: white; border: 0px;">人民币</span>
-           </div>
-        </div>
-        <div class="form-group">
-           <!-- <label for="name">比市场平均收费便宜</label> -->
-           <div class="input-group">
-            <span class="input-group-addon" style="background-color: white; border: 0px;">比市场平均收费便宜:</span>
-            <input type="text" class="form-control" style=" border: 0px;" id="lessThanAvg" disabled>
-            <span class="input-group-addon" style="background-color: white; border: 0px;">人民币</span>
-          </div>
-        </div>
-      </form>
+      <table class="table table-bordered" id="billingTable">
+        <caption>费用</caption>
+        <tbody>
+          <tr class="info">
+            <td>TAO3N服务费</td>
+            <td id="serviceBilling"></td>
+            <td>人民币</td>
+          </tr>
+          <tr class="info">
+            <td style="text-align: right; color:#e2861a;">比市场平均收费便宜</td>
+            <td id="lessThanAvg"></td>
+            <td>人民币</td>
+          </tr>
+        </tbody>
+      </table>
 
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
@@ -168,6 +123,8 @@
 
 <script>
   $(function () {
+    $("#rightTable").hide();
+    $("#billingTable").hide();
     var nua = navigator.userAgent
     var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1)
     if (isAndroid) {
@@ -193,12 +150,17 @@
       }
       total = returnProfit + returnBilling;
       $("#returnBilling").val(returnBilling.toFixed(2));
+      $("#returnBilling").text(returnBilling.toFixed(2));
+      $("#returnProfit").text(returnProfit.toFixed(2));
       $("#returnProfit").val(returnProfit.toFixed(2));
       $("#total").val(total.toFixed(2));
+      $("#total").text(total.toFixed(2));
       if (startLevel >= 3) {
           $("#extraProfit").val("基础服务费5折优惠+优客极速退");
+          $("#extraProfit").text("基础服务费5折优惠+优客极速退");
       } else {
           $("#extraProfit").val("基础服务费5折优惠");
+          $("#extraProfit").text("基础服务费5折优惠");
       }
       var serviceBilling = 0;
       var lessThanAvg = 0;
@@ -213,7 +175,14 @@
 
       lessThanAvg = currentBilling * 0.06 * 1.06 - serviceBilling;
       $("#serviceBilling").val(serviceBilling.toFixed(2));
+      $("#serviceBilling").text(serviceBilling.toFixed(2));
       $("#lessThanAvg").val(lessThanAvg.toFixed(2));
+      $("#lessThanAvg").text(lessThanAvg.toFixed(2));
+
+      $("#serviceRight").val("  ✔️ ");
+      $("#serviceRight").text("  ✔️ ");
+      $("#rightTable").show();
+      $("#billingTable").show();
   });
 
   $("#resetButton").click(function () {
@@ -225,6 +194,16 @@
     $("#extraProfit").val("");
     $("#serviceBilling").val("");
     $("#lessThanAvg").val("");
+    $("#returnBilling").text("");
+    $("#returnProfit").text("");
+    $("#serviceRight").text("");
+    $("#total").text("");
+    $("#extraProfit").text("");
+    $("#lessThanAvg").text("");
+    $("#serviceBilling").text("");
+    $("#serviceRight").val("");
+    $("#rightTable").hide();
+    $("#billingTable").hide();
   });
 
 </script>
