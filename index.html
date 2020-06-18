@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Calculator</title>
 
@@ -26,8 +27,8 @@
   	        <div class="form-group">
   	           <label for="name">本次订单金额</label>
                <div class="input-group">
-  	              <input type="name" class="form-control" id="currentBilling" placeholder="请输入">
-                  <span class="input-group-addon">美金</span>
+  	              <input type="text" class="form-control" id="currentBilling" style="border-right-width: 0px;" placeholder="请输入">
+                  <span class="input-group-addon" style="background-color: white;">美元</span>
                 </div>
             </div>
             <div class="form-group">
@@ -43,8 +44,8 @@
   	        <div class="form-group">
               <label for="name">上季度一达通出口结汇金额</label>
               <div class="input-group">
-                <input type="name" class="form-control" id="lastQuarterBilling" placeholder="请输入">
-                <span class="input-group-addon">美金</span>
+                <input type="name" class="form-control" id="lastQuarterBilling" style="border-right-width: 0px;" placeholder="请输入">
+                <span class="input-group-addon" style="background-color: white;">美元</span>
               </div>
             </div>
 
@@ -67,7 +68,7 @@
 
       <form role="form">
         <div class="form-group">
-          <label for="colFormLabelSm">退税垫资款</label>
+          <label for="colFormLabelSm">退回垫资税</label>
           <!-- <div class="col-xs-8 form-inline"> -->
             <div class="input-group">
               <input type="text" class="form-control" id="returnBilling" disabled>
@@ -160,18 +161,18 @@
       $("#returnProfit").val(returnProfit.toFixed(2));
       $("#total").val(total.toFixed(2));
       if (startLevel >= 3) {
-          $("#extraProfit").val("基础服务费5折优惠+优客极速退");
+          $("#extraProfit").val("五折优惠+优客极速退");
       } else {
-          $("#extraProfit").val("基础服务费5折优惠");
+          $("#extraProfit").val("五折优惠");
       }
       var serviceBilling = 0;
       var lessThanAvg = 0;
       if (currentBilling < 13334) {
-          serviceBilling = 200 * 1.06 * 0.5 + returnBilling * 0.025 * 1.06;
+          serviceBilling = 200 * 1.06 * 0.5 + returnBilling * 0.035 * 1.06;
       } else if (currentBilling >= 13334 && currentBilling < 40000) {
-          serviceBilling = currentBilling * 1.06 * 0.5 + returnBilling * 0.025 * 1.06;
+          serviceBilling = currentBilling * 1.06 * 0.5 + returnBilling * 0.035 * 1.06;
       } else {
-          serviceBilling = 600 * 1.06 * 0.5 + returnBilling * 0.025 * 1.06;
+          serviceBilling = 600 * 1.06 * 0.5 + returnBilling * 0.035 * 1.06;
       }
       lessThanAvg = currentBilling * 0.06 * 1.06 - serviceBilling;
       $("#serviceBilling").val(serviceBilling.toFixed(2));
